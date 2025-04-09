@@ -1,0 +1,36 @@
+{
+	"name": "ds_dim_pizza_type",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_dw_pizzaas_sales",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DW"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pizza_type_id",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre",
+				"type": "varchar"
+			},
+			{
+				"name": "categoria",
+				"type": "varchar"
+			},
+			{
+				"name": "ingredientes",
+				"type": "text"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_PIZZA_TYPE"
+		}
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"name": "ds_dim_orden",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_dw_pizzaas_sales",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DW"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "order_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "fecha",
+				"type": "date"
+			},
+			{
+				"name": "hora",
+				"type": "time",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_ORDEN"
+		}
+	}
+}
