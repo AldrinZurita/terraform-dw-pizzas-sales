@@ -1,5 +1,5 @@
 {
-	"name": "dw_ventas",
+	"name": "dw_pizzas",
 	"properties": {
 		"folder": {
 			"name": "DW"
@@ -17,35 +17,43 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "ds_dim_orden",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				}
 			],
 			"transformations": [
-				{
-					"name": "cast1"
-				},
 				{
 					"name": "sort1"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          venta_id as integer",
+				"          pizza_id as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'Select distinct venta_id from [dbo].[tbl_pizzas_sales]',",
+				"     query: 'Select distinct pizza_id from [dbo].[tbl_pizzas_sales]',",
 				"     format: 'query') ~> source1",
-				"source1 cast(output(",
-				"          venta_id as integer",
-				"     ),",
-				"     errors: true) ~> cast1",
-				"cast1 sort(asc(ERROR_FUNCTION(''), true)) ~> sort1",
+				"source1 sort(asc(pizza_id, true)) ~> sort1",
 				"sort1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          order_id as integer,",
+				"          fecha as date,",
+				"          hora as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
